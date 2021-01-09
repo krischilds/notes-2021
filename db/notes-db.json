@@ -1,0 +1,16 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "date": "12-24-2020",
+      "priority": 5,
+      "note": "note 1",
+      "dateCreated": "",
+      "category": "",
+      "dueDate": "",
+      "state": "",
+      "createdBy": ""
+    }
+   
+  ]
+}

@@ -1,0 +1,7 @@
+
+
+ul li {
+    -webkit-transition: height 0.5s 0.2s cubic-bezier(.165,.84,.44,1);
+    transition: height 0.5s 0.2s cubic-bezier(.165,.84,.44,1);
+}
+
