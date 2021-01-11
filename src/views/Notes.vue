@@ -1,45 +1,36 @@
 <template>
-  <div>
-    <section class="page-title-section">
-      <div
-        class="page-title"
-        :class="{ 'page-title-sticky': scrollPosition > 20 }"
-      >
-        {{ pageTitle }}
-      </div>
-    </section>
-    <div class="page-layout__2-cols">
-      <nav class="form-1">
-        <note-form></note-form>
-      </nav>
-      <div class="view-1">
+  <div class="notes-page-layout">
+      
+      <note-form class="note-form"></note-form>    
+      <notes-view class="notes-view" :items="getNotes" :title="`Notes`"></notes-view>
+      <note-view class="note-view">
+        <div>Total Notes: {{ notesLength }}</div>
+      </note-view>
+
+    
+        <!--
         <CardLayout :items="getNotes" :title="`Notes`" :page="`notes`">
           <template scope="item">
-            <div style="min-width:400px">
+            <div style="min-width:200px">
               <div>{{ item.note }}</div>
               <div>{{ item.dateCreated }}</div>
               <div>{{ item.priority }}</div>
             </div>
           </template>
         </CardLayout>
-
-        <div id="sticky">
-          <button :class="{ 'fixed-button': isFixed }">Show Message</button>
-        </div>
-      </div>
-    </div>
+    -->
+     
   </div>
 </template>
 
 <script>
-// import NotesView from "../components/Notes/NotesView.vue";
 import NoteForm from "../components/Notes/NoteForm.vue";
-import CardLayout from "../components/General/CardLayout.vue";
-// import Debug from "../components/General/Debug";
+import NotesView from "../components/Notes/NotesView.vue";
+import NoteView from "../components/Notes/NoteView.vue";
 
 export default {
   name: "Notes",
-  components: { CardLayout, NoteForm },
+  components: { NoteForm, NotesView, NoteView },
   props: {
     pageTitle: {
       type: String,
@@ -53,8 +44,14 @@ export default {
     };
   },
   computed: {
+    notesLength() {
+      const l = this.$store.getters.getNotes ? this.$store.getters.getNotes.length : 0;
+      return l;
+    },
     getNotes() {
-      return this.$store.getters.getNotes;
+      let items = this.$store.getters.getNotes;
+      console.log("Notes", items);
+      return items;
     },
     isFixed() {
       return this.scrollPosition > 0;
@@ -89,76 +86,33 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.fixed-button {
-  position: fixed;
-  bottom: 40px;
-  right: 20px;
-  background: rgb(6, 103, 168);
-  color: white;
-}
+<style lang="scss" scoped>
 
-.page-title-section {
-  border: 2px solid rgb(255, 199, 14);
-}
-
-.page-title {
-  font-size: 1rem;
-  font-weight: bold;
-  color: darkorange;
-}
-
-.page-title-sticky {
-  position: fixed;
-  left: 20px;
-  top: 20px;
-  background: lightblue;
-  color: darkcyan;
-}
-
-.page-layout__2-cols {
-  display: flex;
-  justify-content: space-between;
-
-  .form-1 {
-    flex: 1;
-    padding: 10px;
-  }
-
-  .grid-container {
-    flex: 4;
-  }
-}
-
-.block {
-  border: 2px solid gray;
-  border-radius: 4px;
-  min-height: 400px;
-}
-
-.grid-container.notes {
+.notes-page-layout {
   display: grid;
-  list-style: none;
-  grid-template:
-    "title title title"
-    "form1 view1 view1";
-  grid-gap: 10px;
-  padding: 10px;
-  align-content: stretch;
-}
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
+  grid-gap: 2px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height: 100%;
 
-.title {
-  color: rgb(3, 123, 153);
-  font-size: 1.5rem;
-  grid-area: title;
-}
+  .note-form {
+    background: lightYellow;
+    grid-column: span 1;
 
-.form-1 {
-  background: orange;
-  grid-area: form1;
-}
-.view-1 {
-  background: rgb(0, 217, 255);
-  grid-area: view1;
+  }
+
+  .notes-view {
+    background: cornflowerblue;
+    grid-column: span 2;
+  }
+
+  .note-view {
+    background: lightblue;
+    grid-column: span 3;
+  }
+
 }
 </style>

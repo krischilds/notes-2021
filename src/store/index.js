@@ -10,17 +10,16 @@ export default new Vuex.Store({
     username: "",
     notes: null
   },
-  mutations: {  
+  mutations: {   
     setNotes(state, notes) {
       state.notes = notes
     },
     saveUsername(state, value) {
       state.username = value;
     },
-    saveNote(state, note) {
-      state.note = note;
-
-      state.notes.push(note);
+    addNote(state, note) {
+      let obj = Object.assign({}, note);
+      state.notes.push(obj);
     },
   },
   getters: {
