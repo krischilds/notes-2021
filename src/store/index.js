@@ -35,7 +35,6 @@ export default new Vuex.Store({
   },
 
   actions: {
-
     getNotes({ commit }) {
       axios.get('http://localhost:3000/notes')
         .then(response => {

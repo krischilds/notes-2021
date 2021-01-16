@@ -24,6 +24,24 @@
       ></b-form-input>
 
       <div>
+        <b-form-select v-model="selected" :options="options"></b-form-select>
+      </div>
+
+      <div>
+        <b-dropdown id="dropdown-1" text="Items" class="m-md-2">
+          <b-dropdown-item v-for="item in form.items" :key="item.id">{{
+            item.itemType
+          }}</b-dropdown-item>
+        </b-dropdown>
+      </div>
+      <div>
+        <select id="dropdown-2" text="Items" class="m-md-2">
+          <option v-for="item in form.items" :key="item.id">
+            {{ item.itemType }}
+          </option>
+        </select>
+      </div>
+      <div>
         Form Valid: <strong>{{ form.valid }}</strong>
       </div>
 
@@ -35,7 +53,11 @@
           Note has not been created
         </b-alert>
       </div>
-      <slot name="button"><b-button type="submit" :disabled="!isFormComplete">Submit</b-button></slot>
+      <slot name="button"
+        ><b-button type="submit" :disabled="!isFormComplete"
+          >Submit</b-button
+        ></slot
+      >
     </b-form>
   </section>
 </template>
@@ -53,9 +75,18 @@ export default {
         hasSubmitted: false,
         isVisible: true,
         noteText: "",
+        items: [],
         priority: 1,
         valid: false,
       },
+      selected: null,
+      options: [
+        { value: null, text: "Please select an option" },
+        { value: "a", text: "This is First option" },
+        { value: "b", text: "Selected Option" },
+        { value: { C: "3PO" }, text: "This is an option with object value" },
+        { value: "d", text: "This one is disabled", disabled: true },
+      ],
     };
   },
   computed: {
@@ -102,6 +133,21 @@ export default {
   },
   mounted() {
     console.log(this);
+
+    this.form.items = [
+      { itemType: "pencil", id: 1 },
+      { itemType: "pencil-red", id: 2 },
+      { itemType: "pencil-green", id: 3 },
+      { itemType: "pencil-blue", id: 4 },
+    ];
+
+    for (let i = 0; i < 100; i++) {
+      let j = { itemType: `pencil-${i}`, id: i };
+      this.form.items.push(j);
+
+      let jj = { value: `a${i}`, text: `option ${i}` };
+      this.options.push(jj);
+    }
   },
 };
 </script>
@@ -118,10 +164,9 @@ textarea {
     overflow-y: auto !important;
   }
 
-  &.was-validated &.form-control:valid, &.form-control.is-valid {
+  &.was-validated &.form-control:valid,
+  &.form-control.is-valid {
     background-position: right calc(1rem) center;
   }
 }
-
-
 </style>

@@ -9,7 +9,11 @@
       "category": "",
       "dueDate": "",
       "state": "",
-      "createdBy": ""
+      "createdBy": "",
+      "items": [{"itemType":"pencil","id":1},
+                  {"itemType":"pencil-red","id":2},
+                  {"itemType":"pencil-green","id":3},
+                  {"itemType":"pencil-blue","id":4}]
     }
    
   ]
