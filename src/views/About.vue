@@ -124,24 +124,12 @@ export default {
     this.treeMap = treeMap;
     this.tree = this.treeMap[this.selected];
   },
+  mounted() {
+    console.log(TreeMenuRoot);
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-.tree-menu-container {
-  background: #7cc4ff;
-  color: darkblue;
-  min-width: 240px;
-  min-height: 300px;
-  border: 1px solid blue;
-  select {
-    border: 0;
-    background: #2196f3;
-    font-size: 18px;
-    color: white;
-    padding: 10px;
-    width: 100%;
-    text-align: left;
-  }
-}
+
 </style>

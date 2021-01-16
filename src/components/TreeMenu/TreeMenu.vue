@@ -1,5 +1,5 @@
 <template>
-  <div class="tree-menu">
+  <div class="tree-menu" :style="cssProps">
     <div class="label-wrapper" @click="toggleChildren">
       <div :style="indent" :class="labelClasses">
         <i
@@ -14,11 +14,11 @@
             <a href="#">{{ node.value }}</a> {{ node.type }}
           </span>
           <span v-if="node.type === 'dropdown'">
-            <span style="color:red">{{ node.value }}</span>
+            <span style="color: red">{{ node.value }}</span>
             <select>
-              <option v-for="x in node.options" :value="x" :key="x">{{
-                x
-              }}</option>
+              <option v-for="(x,i) in node.options" :value="x" :key="`option-${x}-${i}`">
+                {{ x }}
+              </option>
             </select>
           </span>
         </div>
@@ -26,8 +26,8 @@
     </div>
     <div v-if="showChildren">
       <tree-menu
-        :key="node"
-        v-for="node in nodes"
+        :key="`node-${n}`"
+        v-for="(node,n) in nodes"
         :nodes="node.nodes"
         :node="node.node"
         :depth="depth + 1"
@@ -38,7 +38,22 @@
 </template>
 <script>
 export default {
-  props: ["node", "nodes", "depth", "special"],
+  props: {
+    node: { required: true },
+    nodes: { required: false },
+    depth: { required: false },
+    special: { required: false },
+    theme: {
+      type: Object,
+      default () {
+        return {
+          primary: "blue",
+          secondary: "red",
+          text: "white"
+        }
+      }
+    },
+  },
   name: "tree-menu",
   data() {
     return { showChildren: false };
@@ -50,18 +65,25 @@ export default {
     iconClasses() {
       return {
         "fa-plus-square-o": !this.showChildren,
-        "fa-minus-square-o": this.showChildren
+        "fa-minus-square-o": this.showChildren,
       };
     },
     labelClasses() {
       return { "has-children": this.nodes };
-    }
+    },
+    cssProps() {
+      return {
+        '--background-color': this.theme.primary,
+        '--text-color': this.theme.text,
+        '--hover-text-color': this.theme.secondary
+      }
+    },
   },
   methods: {
     toggleChildren() {
       this.showChildren = !this.showChildren;
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -72,7 +94,7 @@ export default {
   .label-wrapper {
     padding-bottom: 10px;
     margin-bottom: 10px;
-    border-bottom: 0px solid rgb(80, 169, 221);
+    border-bottom: 0px solid var(--bg-hover-color);
     font-weight: normal;
     .has-children {
       cursor: pointer;
