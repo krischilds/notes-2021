@@ -1,13 +1,22 @@
 <template>
-  <div class="notes-page-layout">
+  <div class="notes-page-layout" :style="getStyle">
       
-      <note-form class="note-form"></note-form>    
+      <note-form class="note-form" :backgroundColor="getStyle.backgroundColor" :color="getStyle.color" theme="dark"></note-form>    
       <notes-view class="notes-view" :items="getNotes" :title="`Notes`"></notes-view>
       <note-view class="note-view">
         <div>Total Notes: {{ notesLength }}</div>
       </note-view>
 
-    
+      <v-select
+          :background-color="getStyle.backgroundColor"
+          :color="getStyle.color"
+          :items="themeKeys"
+          label="Standard"
+          v-model="themeSelected"
+          @change="changeTheme"
+          dark
+          dense
+        ></v-select>
         <!--
         <CardLayout :items="getNotes" :title="`Notes`" :page="`notes`">
           <template scope="item">
@@ -19,7 +28,6 @@
           </template>
         </CardLayout>
     -->
-     
   </div>
 </template>
 
@@ -27,9 +35,11 @@
 import NoteForm from "../components/Notes/NoteForm.vue";
 import NotesView from "../components/Notes/NotesView.vue";
 import NoteView from "../components/Notes/NoteView.vue";
+import {theme} from "../mixins/themesMixin";
 
 export default {
   name: "Notes",
+  mixins: [theme],
   components: { NoteForm, NotesView, NoteView },
   props: {
     pageTitle: {
@@ -40,7 +50,7 @@ export default {
   data() {
     return {
       windowHeight: 0,
-      scrollPosition: 0,
+      scrollPosition: 0,      
     };
   },
   computed: {
@@ -56,6 +66,16 @@ export default {
     isFixed() {
       return this.scrollPosition > 0;
     },
+    themeKeys() {
+      const themes = this.$store.getters.getThemes;
+      return (Object.keys(themes));
+    },
+    colors() {
+      const themes = this.$store.getters.getThemes;
+      let theme = themes[this.themeSelected];
+      return theme;
+    }
+
   },
   watch: {
     scrollPosition: function (val) {
@@ -65,6 +85,16 @@ export default {
     },
   },
   methods: {
+    changeTheme() {
+      const themes = this.$store.getters.getThemes;
+      console.log(themes);
+      let theme = themes[this.themeSelected];
+      if (!theme) return;
+      this.$store.commit("setThemeSelected", this.themeSelected);
+      this.$store.commit("setTheme", theme);
+      this.backgroundColor=theme["background-color"];
+      this.color=theme.color; // TODO: this is overwriting a prop.  change it
+    },
     onResize() {
       this.windowHeight = window.innerHeight;
     },
@@ -74,10 +104,12 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getNotes");
+    this.$store.dispatch("getThemes");
     this.$nextTick(() => {
       window.addEventListener("resize", this.onResize);
       window.addEventListener("scroll", this.updateScroll);
     });
+    console.log(this.getStyle);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.onResize);
@@ -99,18 +131,18 @@ export default {
   height: 100%;
 
   .note-form {
-    background: lightYellow;
+    // background: lightYellow;
     grid-column: span 1;
 
   }
 
   .notes-view {
-    background: cornflowerblue;
+    // background: cornflowerblue;
     grid-column: span 2;
   }
 
   .note-view {
-    background: lightblue;
+    // background: lightblue;
     grid-column: span 3;
   }
 

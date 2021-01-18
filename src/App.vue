@@ -1,33 +1,55 @@
 <template>
-  <div id="app" class="grid-layout-wrapper app-fonts">
-    <header class="app-header">App Title</header>
-    <router-nav class="app-nav"/>
-    <div class="page-view">
-      <router-view />
+  <v-app>
+    <div id="app" class="grid-layout-wrapper app-fonts app-name-vetdrugs">
+      <header class="app-header">App Title</header>
+      <router-nav class="app-nav" />
+      <div class="page-view">
+        <router-view />
+      </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
 import RouterNav from "./components/Nav/RouterNav.vue";
 import Vue from "vue";
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import "./assets/main.css";
-
-// Install BootstrapVue
-Vue.use(BootstrapVue);
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin);
 
 export default {
   name: "App",
   components: { "router-nav": RouterNav },
+  data() {
+    return {
+      theme1: {
+        type: Object,
+        default() {
+          return {
+            "backgroundColor": "blue",
+            "color": "white",
+          };
+        },
+      },
+      theme2: {
+        type: Object,
+        default() {
+          return {
+            "backgroundColor": "red",
+            "color": "white",
+          };
+        },
+      },
+
+    };
+  },
+computed: {
+    theme: function () {
+      return this.theme1;
+    },
+  },
 };
 </script>
 
 <style lang="scss">
+
 .app-fonts {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -47,15 +69,18 @@ export default {
   background: white;
 
   .app-header {
-    background: lightcoral;
+    // background: lightcoral;
+    border: 2px solid lightcoral;
   }
 
   .app-nav {
-    background: lightgreen;
+    // background: lightgreen;
+    border: 2px solid lightgreen;
   }
 
   .page-view {
-    background: lightYellow;
+    //background: lightYellow;
+    border: 2px solid lightskyblue;
   }
 
   /*
@@ -74,5 +99,4 @@ export default {
   }
   */
 }
-
 </style>

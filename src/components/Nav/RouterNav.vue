@@ -12,7 +12,11 @@ import { routes } from "../../router";
 
 export default {
   name: "RouterNav",
-  props: {},
+  props: {
+    theme: {
+      type: Object
+    }
+  },
   data() {
     return {
       routes: null

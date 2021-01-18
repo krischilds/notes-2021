@@ -1,76 +1,49 @@
 <template>
-  <section class="note-form">
+  <section class="note-form" :style="{ background: backgroundColor, color: color}">
     <slot name="note-header">Note Header</slot>
-
-    <b-form @submit="onSubmit" @reset="onReset" v-if="form.isVisible">
-      <b-form-textarea
-        class="form-control"
-        v-model="form.noteText"
-        debounce="500"
-        rows="3"
-        max-rows="5"
-        :state="isNoteTextValid"
-      ></b-form-textarea>
-      <div class="error-message" v-if="!isNoteTextValid">
-        The note text is invalid.
-      </div>
-      <!-- TODO: Make this dynamic input/type/validation rules -->
-      <b-form-input
-        :id="`type-${type}`"
-        :type="`number`"
-        v-model.number="form.priority"
-        class="form-control"
-        :state="form.priority > 0 && form.priority <= 10"
-      ></b-form-input>
-
+    <v-form @submit="onSubmit" @reset="onReset" v-if="form.isVisible">
+      <h1>COLORS: {{ backgroundColor }} : {{ color }}</h1>
       <div>
-        <b-form-select v-model="selected" :options="options"></b-form-select>
+        <v-text-field
+          dark
+          :background-color="backgroundColor"
+          :color="color"
+          label="Main input"
+          :rules="rules"
+          hide-details="auto"
+        ></v-text-field>
+        <hr />
+        <v-text-field
+          :background-color="backgroundColor"
+          :color="color"
+          label="Another input"
+        ></v-text-field>
+        <v-btn
+          dark
+          color2="red"
+          :style="{ color: color, background: backgroundColor }"
+        >
+          Red Dark
+        </v-btn>
+        <v-btn light color="blue"> Blue Light </v-btn>
       </div>
-
-      <div>
-        <b-dropdown id="dropdown-1" text="Items" class="m-md-2">
-          <b-dropdown-item v-for="item in form.items" :key="item.id">{{
-            item.itemType
-          }}</b-dropdown-item>
-        </b-dropdown>
-      </div>
-      <div>
-        <select id="dropdown-2" text="Items" class="m-md-2">
-          <option v-for="item in form.items" :key="item.id">
-            {{ item.itemType }}
-          </option>
-        </select>
-      </div>
-      <div>
-        Form Valid: <strong>{{ form.valid }}</strong>
-      </div>
-
-      <div v-if="form.hasSubmitted">
-        <b-alert v-if="isFormComplete" :show="isFormComplete" variant="success">
-          Note created
-        </b-alert>
-        <b-alert v-else :show="!isFormComplete" variant="danger">
-          Note has not been created
-        </b-alert>
-      </div>
-      <slot name="button"
-        ><b-button type="submit" :disabled="!isFormComplete"
-          >Submit</b-button
-        ></slot
-      >
-    </b-form>
+    </v-form>
   </section>
 </template>
 
 <script>
 import router from "../../router";
+import { theme } from "../../mixins/themesMixin";
 
 export default {
   name: "NoteForm",
-  props: [],
+  mixins: [theme],
   data() {
     return {
-      type: "number",
+      rules: [
+        (value) => !!value || "Required.",
+        (value) => (value && value.length >= 3) || "Min 3 characters",
+      ],
       form: {
         hasSubmitted: false,
         isVisible: true,
@@ -148,14 +121,23 @@ export default {
       let jj = { value: `a${i}`, text: `option ${i}` };
       this.options.push(jj);
     }
+
+    /*
+    this.$vuetify.theme.themes.dark.primary = "purple";
+    this.$vuetify.theme.themes.dark.secondary = "orange";
+    this.$vuetify.theme.themes.light.primary.base = "purple";
+    this.$vuetify.theme.themes.light.secondary.base = "orange";
+    */
+    console.log(this.$vuetify?.theme?.themes?.light);
+    console.log(this.$vuetify?.theme?.themes?.dark);
+
+    console.log(this.getStyle);
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .note-form {
-  background-color: whitesmoke;
-  border: 4px solid rgb(207, 207, 207);
   border-radius: 0;
 }
 
@@ -170,3 +152,4 @@ textarea {
   }
 }
 </style>
+
