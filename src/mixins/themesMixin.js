@@ -19,14 +19,6 @@ export const theme = {
         },
         // TODO: Add helpers on top of vuex
     },
-    methods: {
-        cssVars() {
-            return {
-              '--background-color': this.$props["backgroundColor"],
-              '--text-color': this.$props["color"]
-            }
-          }
-    },
     props: {
         "backgroundColor": {
             type: String,
@@ -39,8 +31,8 @@ export const theme = {
     },
     data() {
         return {
-            themeSelected: "",
-            theme: {}
+           // themeSelected: "",
+           // theme: {}
         }
     }
 }

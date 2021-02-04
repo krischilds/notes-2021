@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div id="app" class="grid-layout-wrapper app-fonts app-name-vetdrugs">
+    <div id="app" class="grid-layout-wrapper app-fonts" :style="getStyle">
       <header class="app-header">App Title</header>
       <router-nav class="app-nav" />
       <div class="page-view">
@@ -19,37 +19,49 @@ export default {
   components: { "router-nav": RouterNav },
   data() {
     return {
-      theme1: {
+      themeSelected: {
         type: Object,
         default() {
           return {
-            "backgroundColor": "blue",
-            "color": "white",
+            backgroundColor: "teal",
+            color: "red",
           };
         },
       },
-      theme2: {
-        type: Object,
-        default() {
-          return {
-            "backgroundColor": "red",
-            "color": "white",
-          };
-        },
-      },
-
     };
   },
-computed: {
+  computed: {
     theme: function () {
-      return this.theme1;
+      return this.$store.getters.getTheme;
     },
+    getStyle: function () {
+      // this.$props["backgroundColor"]
+      // this.$props["color"]
+
+      const theme = this.$store.getters.getTheme;
+      // TODO: make this return this.theme
+
+      return {
+        backgroundColor: theme.backgroundColor,
+        color: theme.color
+      };
+    },
+    // TODO: Add helpers on top of vuex
+  },
+  mounted() {
+    const themes = this.$store.getters.getThemes;
+    const theme = this.$store.getters.getTheme;
+
+    console.log("APP THEME");
+    console.log(theme);
+
+    // TODO: set default theme if none selected
+    // themeSelected
   },
 };
 </script>
 
 <style lang="scss">
-
 .app-fonts {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

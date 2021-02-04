@@ -7,16 +7,41 @@ Vue.use(Vuex);
 // TODO: Move to DB
 const themes = {
   vetdrugs: {
-      "backgroundColor": "darkgreen",
-      color: "white"
+    backgroundColor: "darkgreen",
+    color: "white",
+    primary: "#3f51b5",
+    secondary: "#2196f3",
+    accent: "#607d8b",
+    error: "#f44336",
+    warning: "#ffc107",
+    info: "#03a9f4",
+    success: "#4caf50",
+    dark: true,
+
   },
   pesticides: {
-      "backgroundColor": "blue",
-      color: "white"
+    backgroundColor: "blue",
+    color: "white",
+    primary: "#3f51b5",
+    secondary: "#2196f3",
+    accent: "#607d8b",
+    error: "#f44336",
+    warning: "#ffc107",
+    info: "#03a9f4",
+    success: "#4caf50",
+    dark: true,
   },
   contaminants: {
-      "backgroundColor": "lightYellow",
-      color: "darkBlue"
+    backgroundColor: "lightYellow",
+    color: "darkBlue",
+    primary: "#3f51b5",
+    secondary: "#2196f3",
+    accent: "#607d8b",
+    error: "#f44336",
+    warning: "#ffc107",
+    info: "#03a9f4",
+    success: "#4caf50",
+    dark: false,
   },
 };
 
@@ -26,15 +51,15 @@ export default new Vuex.Store({
     username: "",
     notes: null,
     theme: {},
-    themeSelected: "",
+    appSelected: "vetdrugs", // default
     themes: []
   },
-  mutations: {   
+  mutations: {
     setNotes(state, notes) {
       state.notes = notes
     },
-    setThemeSelected(state, themeSelected) {
-      state.themeSelected = themeSelected;
+    setAppSelected(state, appSelected) {
+      state.appSelected = appSelected;
     },
     setThemes(state, themes) {
       state.themes = themes;
@@ -54,8 +79,8 @@ export default new Vuex.Store({
     getNote(state) {
       return state.note;
     },
-    getThemeSelected(state) {
-      return state.themeSelected;
+    getAppSelected(state) {
+      return state.appSelected;
     },
     getUsername(state) {
       return state.username;
@@ -81,6 +106,7 @@ export default new Vuex.Store({
     },
     getThemes({ commit }) {
       console.log("VUEX: getThemes action");
+      // This could be from db query
       commit('setThemes', themes);
     }
   }

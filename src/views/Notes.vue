@@ -12,7 +12,7 @@
           :color="getStyle.color"
           :items="themeKeys"
           label="Standard"
-          v-model="themeSelected"
+          v-model="appSelected"
           @change="changeTheme"
           dark
           dense
@@ -50,7 +50,8 @@ export default {
   data() {
     return {
       windowHeight: 0,
-      scrollPosition: 0,      
+      scrollPosition: 0,
+      appSelected: null      
     };
   },
   computed: {
@@ -70,9 +71,13 @@ export default {
       const themes = this.$store.getters.getThemes;
       return (Object.keys(themes));
     },
-    colors() {
+    getStyle() {
+      const defaultTheme = { backgroundColor:"pink", color:"purple"};
       const themes = this.$store.getters.getThemes;
-      let theme = themes[this.themeSelected];
+      const appSelected = this.$store.getters.getAppSelected;
+      if (!appSelected) return defaultTheme;
+      let theme = themes[appSelected];
+      if (!theme) return defaultTheme;
       return theme;
     }
 
@@ -88,12 +93,12 @@ export default {
     changeTheme() {
       const themes = this.$store.getters.getThemes;
       console.log(themes);
-      let theme = themes[this.themeSelected];
+      let theme = themes[this.appSelected];
       if (!theme) return;
-      this.$store.commit("setThemeSelected", this.themeSelected);
+      this.$store.commit("setAppSelected", this.appSelected);
       this.$store.commit("setTheme", theme);
-      this.backgroundColor=theme["background-color"];
-      this.color=theme.color; // TODO: this is overwriting a prop.  change it
+      //this.backgroundColor=theme.backgroundColor;
+      //this.color=theme.color; // TODO: this is overwriting a prop.  change it
     },
     onResize() {
       this.windowHeight = window.innerHeight;
