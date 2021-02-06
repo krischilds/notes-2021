@@ -2,7 +2,9 @@
 export default {
     mounted: function () {
         console.log("themesMixin:mounted");
-        this.theme = this.$store.getters.getTheme;
+        if (!this.theme)
+            this.$store.dispatch("getThemes");        
+        //this.$store.getters.getTheme;
         console.log("themesMixin:mounted:theme", this.theme);
         /*
             this.$vuetify.theme.themes.dark.primary = "purple";
@@ -36,17 +38,15 @@ export default {
           },
     },
     computed: {
-        getStyle: function () {
+        getStyle() {
             if (!this.theme) return {};
           return {
             backgroundColor: this.theme.backgroundColor,
             color: this.theme.color
           };
         },
-    },        
-    data() {
-        return {
-           theme: null,
+        theme() {
+            return this.$store.getters.getTheme;
         }
-    }
+    },
 }

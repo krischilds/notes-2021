@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <div id="app" class="grid-layout-wrapper app-fonts" :style="getStyle">
+    <div id="app" class="grid-layout-wrapper" :style="getStyle">
       <header class="app-header">App Title</header>
       <router-nav class="app-nav" />
       <div class="page-view">
@@ -43,9 +43,12 @@ export default {
     //const themes = this.$store.getters.getThemes;
     //const theme = this.$store.getters.getTheme;
 
+
     console.log("App.vue:mounted");
     console.log("App.vue:mounted:theme");
+    this.$store.getters.getThemes;
     console.log(this.theme);
+
 
     // TODO: set default theme if none selected
     // themeSelected
@@ -54,11 +57,6 @@ export default {
 </script>
 
 <style lang="scss">
-.app-fonts {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
 
 .grid-layout-wrapper {
   display: grid;

@@ -109,8 +109,8 @@ export default {
     },
   },
   mounted() {
-    console.log(this);
-
+    console.log("NoteForm");
+    console.log(this.theme);
     this.form.items = [
       { itemType: "pencil", id: 1 },
       { itemType: "pencil-red", id: 2 },
