@@ -1,5 +1,5 @@
 <template>
-  <div class="tree-menu" :style="cssProps">
+  <div class="tree-menu" v-if="theme" :style="cssProps">
     <div class="label-wrapper" @click="toggleChildren">
       <div :style="indent" :class="labelClasses">
         <i
@@ -35,25 +35,20 @@
       </tree-menu>
     </div>
   </div>
+  <div v-else>No Theme</div>
 </template>
 <script>
+import themesMixin from "../../mixins/themesMixin";
+
+
 export default {
   props: {
     node: { required: true },
     nodes: { required: false },
     depth: { required: false },
     special: { required: false },
-    theme: {
-      type: Object,
-      default () {
-        return {
-          primary: "blue",
-          secondary: "red",
-          text: "white"
-        }
-      }
-    },
   },
+  mixins: [themesMixin],
   name: "tree-menu",
   data() {
     return { showChildren: false };
@@ -72,9 +67,10 @@ export default {
       return { "has-children": this.nodes };
     },
     cssProps() {
+      if (!this.theme) return null;
       return {
         '--background-color': this.theme.primary,
-        '--text-color': this.theme.text,
+        '--text-color': this.theme.color,
         '--hover-text-color': this.theme.secondary
       }
     },

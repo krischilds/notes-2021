@@ -35,11 +35,11 @@
 import NoteForm from "../components/Notes/NoteForm.vue";
 import NotesView from "../components/Notes/NotesView.vue";
 import NoteView from "../components/Notes/NoteView.vue";
-import {theme} from "../mixins/themesMixin";
+import themesMixin from "../mixins/themesMixin";
 
 export default {
   name: "Notes",
-  mixins: [theme],
+  mixins: [themesMixin],
   components: { NoteForm, NotesView, NoteView },
   props: {
     pageTitle: {
@@ -69,8 +69,11 @@ export default {
     },
     themeKeys() {
       const themes = this.$store.getters.getThemes;
-      return (Object.keys(themes));
+      let keys = themes ? Object.keys(themes) : [];
+      console.log('keys', keys);
+      return keys;
     },
+    /*
     getStyle() {
       const defaultTheme = { backgroundColor:"pink", color:"purple"};
       const themes = this.$store.getters.getThemes;
@@ -80,6 +83,7 @@ export default {
       if (!theme) return defaultTheme;
       return theme;
     }
+    */
 
   },
   watch: {
@@ -89,17 +93,7 @@ export default {
       }
     },
   },
-  methods: {
-    changeTheme() {
-      const themes = this.$store.getters.getThemes;
-      console.log(themes);
-      let theme = themes[this.appSelected];
-      if (!theme) return;
-      this.$store.commit("setAppSelected", this.appSelected);
-      this.$store.commit("setTheme", theme);
-      //this.backgroundColor=theme.backgroundColor;
-      //this.color=theme.color; // TODO: this is overwriting a prop.  change it
-    },
+  methods: {   
     onResize() {
       this.windowHeight = window.innerHeight;
     },
@@ -108,13 +102,11 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getNotes");
-    this.$store.dispatch("getThemes");
+    this.$store.dispatch("getNotes");    
     this.$nextTick(() => {
       window.addEventListener("resize", this.onResize);
       window.addEventListener("scroll", this.updateScroll);
     });
-    console.log(this.getStyle);
   },
   beforeDestroy() {
     window.removeEventListener("resize", this.onResize);

@@ -1,31 +1,35 @@
 <template>
-  <section class="note-form" :style="{ background: backgroundColor, color: color}">
+  <section v-if="theme" class="note-form" :style="getStyle">
     <slot name="note-header">Note Header</slot>
-    <v-form @submit="onSubmit" @reset="onReset" v-if="form.isVisible">
-      <h1>COLORS: {{ backgroundColor }} : {{ color }}</h1>
-      <div>
+    <v-form @submit="onSubmit" @reset="onReset" v-if="form.isVisible">      
+      <div v-if="theme">
+        <h3>COLORS:  BG: {{ theme.backgroundColor }} : TEXT: {{ theme.color }}</h3>
         <v-text-field
           dark
-          :background-color="backgroundColor"
-          :color="color"
+          :background-color="theme.backgroundColor"
+          :color="theme.color"
           label="Main input"
           :rules="rules"
           hide-details="auto"
         ></v-text-field>
         <hr />
         <v-text-field
-          :background-color="backgroundColor"
-          :color="color"
+          :background-color="theme.backgroundColor"
+          :color="theme.color"
           label="Another input"
         ></v-text-field>
         <v-btn
           dark
-          color2="red"
-          :style="{ color: color, background: backgroundColor }"
+          :style="{ color: theme.color, background: theme.backgroundColor }"
         >
           Red Dark
         </v-btn>
-        <v-btn light color="blue"> Blue Light </v-btn>
+        <v-btn light        
+        :style="{ color: theme.color, background: theme.backgroundColor }"
+        > Blue Light </v-btn>
+      </div>
+      <div v-else>
+        <div class="error">No Theme Set</div>
       </div>
     </v-form>
   </section>
@@ -33,11 +37,11 @@
 
 <script>
 import router from "../../router";
-import { theme } from "../../mixins/themesMixin";
+import themesMixin from "../../mixins/themesMixin";
 
 export default {
   name: "NoteForm",
-  mixins: [theme],
+  mixins: [themesMixin],
   data() {
     return {
       rules: [
@@ -121,17 +125,6 @@ export default {
       let jj = { value: `a${i}`, text: `option ${i}` };
       this.options.push(jj);
     }
-
-    /*
-    this.$vuetify.theme.themes.dark.primary = "purple";
-    this.$vuetify.theme.themes.dark.secondary = "orange";
-    this.$vuetify.theme.themes.light.primary.base = "purple";
-    this.$vuetify.theme.themes.light.secondary.base = "orange";
-    */
-    console.log(this.$vuetify?.theme?.themes?.light);
-    console.log(this.$vuetify?.theme?.themes?.dark);
-
-    console.log(this.getStyle);
   },
 };
 </script>

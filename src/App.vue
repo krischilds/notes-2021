@@ -13,23 +13,13 @@
 <script>
 import RouterNav from "./components/Nav/RouterNav.vue";
 import Vue from "vue";
+import themesMixin from "./mixins/themesMixin";
 
 export default {
   name: "App",
+  mixins: [themesMixin],
   components: { "router-nav": RouterNav },
-  data() {
-    return {
-      themeSelected: {
-        type: Object,
-        default() {
-          return {
-            backgroundColor: "teal",
-            color: "red",
-          };
-        },
-      },
-    };
-  },
+  /*
   computed: {
     theme: function () {
       return this.$store.getters.getTheme;
@@ -48,12 +38,14 @@ export default {
     },
     // TODO: Add helpers on top of vuex
   },
+  */
   mounted() {
-    const themes = this.$store.getters.getThemes;
-    const theme = this.$store.getters.getTheme;
+    //const themes = this.$store.getters.getThemes;
+    //const theme = this.$store.getters.getTheme;
 
-    console.log("APP THEME");
-    console.log(theme);
+    console.log("App.vue:mounted");
+    console.log("App.vue:mounted:theme");
+    console.log(this.theme);
 
     // TODO: set default theme if none selected
     // themeSelected

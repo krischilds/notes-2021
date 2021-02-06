@@ -49,10 +49,10 @@ export default new Vuex.Store({
   state: {
     note: {},
     username: "",
-    notes: null,
-    theme: {},
+    notes: null,    
     appSelected: "vetdrugs", // default
-    themes: []
+    themes: null,
+    theme: null,
   },
   mutations: {
     setNotes(state, notes) {
