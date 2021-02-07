@@ -45,8 +45,7 @@ export default {
 
 
     console.log("App.vue:mounted");
-    console.log("App.vue:mounted:theme");
-    this.$store.getters.getThemes;
+    console.log("App.vue:mounted:theme");    
     console.log(this.theme);
 
 

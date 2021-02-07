@@ -1,7 +1,7 @@
 <template>
   <div class="notes-page-layout" :style="getStyle">
       
-      <note-form class="note-form" :backgroundColor="getStyle.backgroundColor" :color="getStyle.color" theme="dark"></note-form>    
+      <note-form class="note-form" :backgroundColor="getStyle.backgroundColor" :color="getStyle.color"></note-form>    
       <notes-view class="notes-view" :items="getNotes" :title="`Notes`"></notes-view>
       <note-view class="note-view">
         <div>Total Notes: {{ notesLength }}</div>

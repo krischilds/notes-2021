@@ -16,9 +16,9 @@ export default {
             console.log(this.getStyle);
         */
     },
-    watch: {        
+    watch: {
         '$store.getters.getTheme': function (newVal, oldVal) {
-            console.log("themesMixin:watch:$store.getters.getTheme");
+            console.log("$$$$$$$  themesMixin:watch:$store.getters.getTheme");
             this.theme = newVal;
         }
     },
