@@ -1,52 +1,64 @@
+import themeInterface from '../themesInterface';
+
 // define a mixin object
 export default {
-    mounted: function () {
-        console.log("themesMixin:mounted");
-        if (!this.theme)
-            this.$store.dispatch("getThemes");        
-        //this.$store.getters.getTheme;
-        console.log("themesMixin:mounted:theme", this.theme);
-        /*
-            this.$vuetify.theme.themes.dark.primary = "purple";
-            this.$vuetify.theme.themes.dark.secondary = "orange";
-            this.$vuetify.theme.themes.light.primary.base = "purple";
-            this.$vuetify.theme.themes.light.secondary.base = "orange";
-            console.log(this.$vuetify?.theme?.themes?.light);
-            console.log(this.$vuetify?.theme?.themes?.dark);
-            console.log(this.getStyle);
-        */
-    },
-    watch: {
-        '$store.getters.getTheme': function (newVal, oldVal) {
-            console.log("$$$$$$$  themesMixin:watch:$store.getters.getTheme");
-            this.theme = newVal;
-        }
-    },
-    created: function () {
-        console.log("themesMixin:create");
-    },
     methods: {
-        changeTheme(key) {
-            console.log("themesMixin:changeTheme:"+key);
-            const themes = this.$store.getters.getThemes;
-            console.log(themes);
-            let theme = themes[key];
+        changeTheme(name) {
+            if (!name) return;
+            console.log("themesMixin:changeTheme:key:" + name);
+            themeInterface.setThemeSelected(name);
+            let theme = themeInterface.getThemeSelected();
             if (!theme) return;
+            // let isDark = this.$store.getters.getThemeIsDark;
             this.$store.commit("setTheme", theme);
-            //this.backgroundColor=theme.backgroundColor;
-            //this.color=theme.color; // TODO: this is overwriting a prop.  change it
-          },
+            console.log("themesMixin:changeTheme:theme:", theme);
+
+            let colors = themeInterface.getThemeColors();
+            for (let c in colors) {
+                if (themeInterface.getIsDark()) {                
+                    this.$vuetify.theme.themes.dark[c] = colors[c];
+                } else {
+                    this.$vuetify.theme.themes.light[c] = colors[c];
+                }
+            }
+            console.log(this.$vuetify.theme.themes.dark);
+            console.log(this.$vuetify.theme.themes.light);
+            
+        },
     },
     computed: {
         getStyle() {
-            if (!this.theme) return {};
-          return {
-            backgroundColor: this.theme.backgroundColor,
-            color: this.theme.color
-          };
+            return themeInterface.getStyle();
+        },
+        themeColors() {
+            return themeInterface.getThemeColors();
         },
         theme() {
-            return this.$store.getters.getTheme;
+            return themeInterface.getThemeSelected();
+            /*
+            let theme = this.$store.getters.getTheme;
+            if (!theme) {
+                theme = themes.find((t)=> {
+                    return (t.name.toLowerCase() === 'default');
+                });
+                this.$store.commit("setTheme", theme);
+            }
+
+            return theme;
+            */
+            /*
+            if (!this.theme) {
+                this.theme = $vuetify.theme.isDark
+                  ? $vuetify.theme.themes.dark
+                  : $vuetify.theme.themes.light;
+              }
+              */
+        },
+        themeNames() {
+            return themeInterface.getThemeNames();
+        },
+        themes() {
+            return themeInterface.getThemes();
         }
     },
 }

@@ -1,46 +1,51 @@
 <template>
-  <div class="notes-page-layout" :style="getStyle">
-      
-      <note-form class="note-form" :backgroundColor="getStyle.backgroundColor" :color="getStyle.color"></note-form>    
-      <notes-view class="notes-view" :items="getNotes" :title="`Notes`"></notes-view>
-      <note-view class="note-view">
-        <div>Total Notes: {{ notesLength }}</div>
-      </note-view>
+  <div class="notes-page-layout">
+    <!--
+        :backgroundColor="getStyle.backgroundColor" :color="getStyle.color"
+        -->
+    <note-form class="note-form"></note-form>
+    <notes-view
+      class="notes-view"
+      :items="getNotes"
+      :title="`Notes`"
+    ></notes-view>
 
-      <v-select
-          :background-color="getStyle.backgroundColor"
-          :color="getStyle.color"
-          :items="themeKeys"
-          label="Standard"
-          v-model="appSelected"
-          @change="changeTheme"
-          dark
-          dense
-        ></v-select>
-        <!--
-        <CardLayout :items="getNotes" :title="`Notes`" :page="`notes`">
-          <template scope="item">
-            <div style="min-width:200px">
-              <div>{{ item.note }}</div>
-              <div>{{ item.dateCreated }}</div>
-              <div>{{ item.priority }}</div>
-            </div>
-          </template>
-        </CardLayout>
-    -->
+    <v-card class="mx-auto" max-width="344" outlined>
+      <v-list-item three-line>
+        <v-list-item-content>
+          <div class="overline mb-4">OVERLINE</div>
+          <v-list-item-title class="headline mb-1">
+            Headline 5
+          </v-list-item-title>
+          <v-list-item-subtitle
+            >Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle
+          >
+        </v-list-item-content>
+        <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
+      </v-list-item>
+      <v-list-item v-for="(item,i) in getNotes" :key="i">
+        <div style="min-width: 200px; border:2px solid red;">
+          <div>{{ item.note }}</div>
+          <div>{{ item.dateCreated }}</div>
+          <div>{{ item.priority }}</div>
+        </div>
+      </v-list-item>
+      <v-card-actions>
+        <v-btn outlined rounded text> Button </v-btn>
+      </v-card-actions>
+    </v-card>
   </div>
 </template>
 
 <script>
 import NoteForm from "../components/Notes/NoteForm.vue";
-import NotesView from "../components/Notes/NotesView.vue";
 import NoteView from "../components/Notes/NoteView.vue";
-import themesMixin from "../mixins/themesMixin";
+import NotesView from "../components/Notes/NotesView.vue";
+
 
 export default {
   name: "Notes",
-  mixins: [themesMixin],
-  components: { NoteForm, NotesView, NoteView },
+  components: { NoteForm, NotesView, },
   props: {
     pageTitle: {
       type: String,
@@ -51,40 +56,24 @@ export default {
     return {
       windowHeight: 0,
       scrollPosition: 0,
-      appSelected: null      
+      appSelected: null,
     };
   },
   computed: {
     notesLength() {
-      const l = this.$store.getters.getNotes ? this.$store.getters.getNotes.length : 0;
+      const l = this.$store.getters.getNotes
+        ? this.$store.getters.getNotes.length
+        : 0;
       return l;
     },
     getNotes() {
-      let items = this.$store.getters.getNotes;
-      console.log("Notes", items);
-      return items;
+      let notes = this.$store.getters.getNotes || [];
+      console.log("Notes", notes);
+      return notes;
     },
     isFixed() {
       return this.scrollPosition > 0;
     },
-    themeKeys() {
-      const themes = this.$store.getters.getThemes;
-      let keys = themes ? Object.keys(themes) : [];
-      console.log('keys', keys);
-      return keys;
-    },
-    /*
-    getStyle() {
-      const defaultTheme = { backgroundColor:"pink", color:"purple"};
-      const themes = this.$store.getters.getThemes;
-      const appSelected = this.$store.getters.getAppSelected;
-      if (!appSelected) return defaultTheme;
-      let theme = themes[appSelected];
-      if (!theme) return defaultTheme;
-      return theme;
-    }
-    */
-
   },
   watch: {
     scrollPosition: function (val) {
@@ -93,7 +82,7 @@ export default {
       }
     },
   },
-  methods: {   
+  methods: {
     onResize() {
       this.windowHeight = window.innerHeight;
     },
@@ -102,7 +91,6 @@ export default {
     },
   },
   mounted() {
-    this.$store.dispatch("getNotes");    
     this.$nextTick(() => {
       window.addEventListener("resize", this.onResize);
       window.addEventListener("scroll", this.updateScroll);
@@ -116,7 +104,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .notes-page-layout {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -130,7 +117,6 @@ export default {
   .note-form {
     // background: lightYellow;
     grid-column: span 1;
-
   }
 
   .notes-view {
@@ -142,6 +128,5 @@ export default {
     // background: lightblue;
     grid-column: span 3;
   }
-
 }
 </style>

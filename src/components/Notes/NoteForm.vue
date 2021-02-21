@@ -2,7 +2,7 @@
   <section v-if="theme" class="note-form" :style="getStyle">
     <slot name="note-header">Note Header</slot>
     <v-form @submit="onSubmit" @reset="onReset" v-if="form.isVisible">      
-      <div v-if="theme">
+      <div>
         <h3>COLORS:  BG: {{ theme.backgroundColor }} : TEXT: {{ theme.color }}</h3>
         <v-text-field
           dark
@@ -28,20 +28,24 @@
         :style="{ color: theme.color, background: theme.backgroundColor }"
         > Blue Light </v-btn>
       </div>
-      <div v-else>
-        <div class="error">No Theme Set</div>
-      </div>
     </v-form>
   </section>
 </template>
 
 <script>
 import router from "../../router";
+import {themes} from '../../themes';
 import themesMixin from "../../mixins/themesMixin";
 
 export default {
   name: "NoteForm",
   mixins: [themesMixin],
+  watch: {
+        '$store.getters.getTheme': function (newVal, oldVal) {
+            console.log("$$$$$$$  themesMixin:watch:$store.getters.getTheme");
+            // this.theme = newVal;
+        }
+    },
   data() {
     return {
       rules: [
@@ -86,6 +90,17 @@ export default {
       } else {
         this.form.valid = false;
       }
+    },
+    changeTheme(key) {
+            console.log("themesMixin:changeTheme:" + key);
+            console.log(themes);
+            let theme = themes[key];
+            if (!theme) return;
+
+            this.$store.commit("setTheme", isDark ? theme.dark : theme.light);
+            //this.backgroundColor=theme.backgroundColor;
+            //this.color=theme.color; // TODO: this is overwriting a prop.  change it
+            // this.$vuetify.theme.themes[this.isDark ? 'dark' : 'light'].primary = val
     },
     onSubmit(evt) {
       this.form.hasSubmitted = true;

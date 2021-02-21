@@ -1,7 +1,9 @@
 <template>
-  <v-app>
-    <div id="app" class="grid-layout-wrapper" :style="getStyle">
-      <header class="app-header">App Title</header>
+  <v-app
+    id="main"
+  >
+    <div id="app" class="grid-layout-wrapper">
+      <header class="app-header">TEST</header>
       <router-nav class="app-nav" />
       <div class="page-view">
         <router-view />
@@ -12,13 +14,18 @@
 
 <script>
 import RouterNav from "./components/Nav/RouterNav.vue";
-import Vue from "vue";
+//import NoteView from "./components/Notes/NoteView.vue";
+//"note-view": NoteView
 import themesMixin from "./mixins/themesMixin";
+
 
 export default {
   name: "App",
   mixins: [themesMixin],
-  components: { "router-nav": RouterNav },
+  components: { "router-nav": RouterNav, },
+  mounted() {
+    this.$store.dispatch('getNotes');
+  }
   /*
   computed: {
     theme: function () {
@@ -39,24 +46,10 @@ export default {
     // TODO: Add helpers on top of vuex
   },
   */
-  mounted() {
-    //const themes = this.$store.getters.getThemes;
-    //const theme = this.$store.getters.getTheme;
-
-
-    console.log("App.vue:mounted");
-    console.log("App.vue:mounted:theme");    
-    console.log(this.theme);
-
-
-    // TODO: set default theme if none selected
-    // themeSelected
-  },
 };
 </script>
 
 <style lang="scss">
-
 .grid-layout-wrapper {
   display: grid;
   grid-template-rows: minmax(20px, 0.5fr) minmax(20px, 0.5fr) minmax(200px, 4fr);
@@ -67,21 +60,23 @@ export default {
   width: 100vw;
   height: 100vh;
 
-  background: white;
+  // background: white;
 
   .app-header {
     // background: lightcoral;
-    border: 2px solid lightcoral;
+    border: 2px solid black;
   }
 
   .app-nav {
     // background: lightgreen;
-    border: 2px solid lightgreen;
+    // border: 2px solid lightgreen;
+    border: 2px solid black;
   }
 
   .page-view {
     //background: lightYellow;
-    border: 2px solid lightskyblue;
+    // border: 2px solid lightskyblue;
+    border: 2px solid black;
   }
 
   /*

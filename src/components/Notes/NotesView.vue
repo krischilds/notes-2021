@@ -2,7 +2,7 @@
   <div>
     <div>NOTES VIEW</div>
      <div id="status">{{ notesLength }}</div>
-     <ul class="notes-view-layout">
+     <ul class="notes-view-layout" v-if="items">
       <li class="title">{{ title }}</li>
       <li class="block" v-for="item in items" :key="item.id" :class="item.abbr">    
        <!-- <slot v-bind="item">{{item.noteText}}</slot> -->

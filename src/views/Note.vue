@@ -1,5 +1,5 @@
 <template>
-  <div style="background: lightblue">
+  <div>
     <div></div>
     <div>
       <h5>Note Page</h5>

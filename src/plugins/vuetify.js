@@ -1,8 +1,18 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib/framework';
+// src/plugins/vuetify.js
 
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib'
+import themeInterface from '../themesInterface';
 Vue.use(Vuetify);
 
-export default new Vuetify({
-    theme: { light: true },
-});
+const theme = themeInterface.getThemeSelected();
+const vuetify = new Vuetify({
+  theme: {
+    themes: {
+        dark: theme.dark,
+        light: theme.light,
+      },    
+  },
+})
+
+export default vuetify
