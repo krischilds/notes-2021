@@ -1,5 +1,5 @@
 <template>
-  <section v-if="theme" class="note-form" :style="getStyle">
+  <section v-if="theme" class="note-form primary">
     <slot name="note-header">Note Header</slot>
     <v-form @submit="onSubmit" @reset="onReset" v-if="form.isVisible">      
       <div>

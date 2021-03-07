@@ -3,7 +3,7 @@
     id="main"
   >
     <div id="app" class="grid-layout-wrapper">
-      <header class="app-header">TEST</header>
+      <header class="app-header">{{themeName}}</header>
       <router-nav class="app-nav" />
       <div class="page-view">
         <router-view />
@@ -26,26 +26,7 @@ export default {
   mounted() {
     this.$store.dispatch('getNotes');
   }
-  /*
-  computed: {
-    theme: function () {
-      return this.$store.getters.getTheme;
-    },
-    getStyle: function () {
-      // this.$props["backgroundColor"]
-      // this.$props["color"]
-
-      const theme = this.$store.getters.getTheme;
-      // TODO: make this return this.theme
-
-      return {
-        backgroundColor: theme.backgroundColor,
-        color: theme.color
-      };
-    },
-    // TODO: Add helpers on top of vuex
-  },
-  */
+  
 };
 </script>
 

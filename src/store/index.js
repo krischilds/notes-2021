@@ -11,28 +11,29 @@ export default new Vuex.Store({
     notes: null,    
     appSelected: null, // default
     theme: null,
-    isDark: false,
+    themeIsDark: false,
+    themeName: null,
   },
-  mutations: {
-    setNotes(state, notes) {
-      state.notes = notes
+  mutations: {    
+    setTheme(state, value) {
+      state.theme = value;
     },
-    setThemeSelected(state, theme) {
-      state.themeSelected = theme;
+    setThemeName(state, value) {
+      state.themeName = value;
     },
-    setTheme(state, theme) {
-      state.theme = theme;
+    setThemeIsDark(state, value) {
+      state.themeIsDark = value;
     },
     saveUsername(state, value) {
       state.username = value;
     },
-    addNote(state, note) {
-      let obj = Object.assign({}, note);
+    addNote(state, value) {
+      let obj = Object.assign({}, value);
       state.notes.push(obj);
     },
-    setThemeIsDark(state, value) {
-      state.isDark = value;
-    }
+    setNotes(state, value) {
+      state.notes = value
+    },    
   },
   getters: {
     getNote(state) {
@@ -44,11 +45,14 @@ export default new Vuex.Store({
     getNotes(state) {
       return state.notes;
     },
-    getThemeSelected(state) {
-      return state.themeSelected;
+    getTheme(state) {
+      return state.theme;
     },
     getThemeIsDark(state) {
-      return state.isDark;
+      return state.themeIsDark;
+    },
+    getThemeName(state) {
+      return state.themeName;
     }
   },
   actions: {

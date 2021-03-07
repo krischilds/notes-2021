@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row>
-      <v-col style="background: $vuetify.theme.dark.background">
+      <v-col>style="background: $vuetify.theme.dark.background"
       <v-btn @click="toggleTheme">Change Theme {{ theme }}</v-btn>
       <v-btn color="orange" @click="changeColor">Change Colors</v-btn>
       </v-col>

@@ -1,8 +1,6 @@
 <template>
   <div class="notes-page-layout">
-    <!--
-        :backgroundColor="getStyle.backgroundColor" :color="getStyle.color"
-        -->
+  
     <note-form class="note-form"></note-form>
     <notes-view
       class="notes-view"
@@ -18,13 +16,13 @@
             Headline 5
           </v-list-item-title>
           <v-list-item-subtitle
-            >Greyhound divisely hello coldly fonwderfully</v-list-item-subtitle
+            >Application Subtitle</v-list-item-subtitle
           >
         </v-list-item-content>
         <v-list-item-avatar tile size="80" color="grey"></v-list-item-avatar>
       </v-list-item>
       <v-list-item v-for="(item,i) in getNotes" :key="i">
-        <div style="min-width: 200px; border:2px solid red;">
+        <div style="min-width: 200px;">
           <div>{{ item.note }}</div>
           <div>{{ item.dateCreated }}</div>
           <div>{{ item.priority }}</div>
@@ -41,7 +39,6 @@
 import NoteForm from "../components/Notes/NoteForm.vue";
 import NoteView from "../components/Notes/NoteView.vue";
 import NotesView from "../components/Notes/NotesView.vue";
-
 
 export default {
   name: "Notes",
