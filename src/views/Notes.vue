@@ -1,6 +1,5 @@
 <template>
   <div class="notes-page-layout">
-  
     <note-form class="note-form"></note-form>
     <notes-view
       class="notes-view"
@@ -8,7 +7,7 @@
       :title="`Notes`"
     ></notes-view>
 
-    <v-card class="mx-auto" max-width="344" outlined>
+    <v-card class="mx-auto secondary" max-width="344" outlined>
       <v-list-item three-line>
         <v-list-item-content>
           <div class="overline mb-4">OVERLINE</div>
@@ -29,7 +28,7 @@
         </div>
       </v-list-item>
       <v-card-actions>
-        <v-btn outlined rounded text> Button </v-btn>
+        <v-btn outlined rounded text class="primary"> Button </v-btn>
       </v-card-actions>
     </v-card>
   </div>

@@ -1,5 +1,6 @@
 <template>
-  <div class="tree-menu" v-if="theme" :style="cssProps">
+  <div class="tree-menu bc-background bc-primary--text" v-if="theme">
+    <!-- :style="cssProps" -->
     <div class="label-wrapper" @click="toggleChildren">
       <div :style="indent" :class="labelClasses">
         <i
@@ -55,12 +56,12 @@ export default {
   },
   computed: {
     indent() {
-      return { transform: `translate(${this.depth * 30}px)` };
+      return { transform: `translate(${this.depth * 28}px)` };
     },
     iconClasses() {
       return {
-        "fa-plus-square-o": !this.showChildren,
-        "fa-minus-square-o": this.showChildren,
+        "fa-plus-square-o bc-success--text": !this.showChildren,
+        "fa-minus-square-o bc-error--text": this.showChildren,
       };
     },
     labelClasses() {
@@ -90,7 +91,7 @@ export default {
   .label-wrapper {
     padding-bottom: 10px;
     margin-bottom: 10px;
-    border-bottom: 0px solid var(--bg-hover-color);
+    border-bottom: 0px solid var(--bc-accent);
     font-weight: normal;
     .has-children {
       cursor: pointer;

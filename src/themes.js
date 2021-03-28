@@ -9,6 +9,8 @@ export const themes = [
             info: '#A196F3',
             warning: '#AB8C00',
             error: '#AF5252',
+            text: 'white',
+            background: '#000000',
         },
         light: {
             primary: '#00FF00',
@@ -18,6 +20,8 @@ export const themes = [
             info: '#A196F3',
             warning: '#AB8C00',
             error: '#AF5252',
+            text: 'black',
+            background: '#FFFFFF',
         },
     },
     {
@@ -30,8 +34,8 @@ export const themes = [
             info: '#2196F3',
             warning: '#FB8C00',
             error: '#FF5252',
-            background: '#309040',
-            text: 'white'
+            text: 'white',
+            background: '#000000',
         },
         light: {
             primary: '#FF4081',
@@ -41,8 +45,8 @@ export const themes = [
             info: '#2196F3',
             warning: '#AB8C00',
             error: '#AF5252',
-            background: '#DDFFEE',
             text: 'black',
+            background: '#FFFFFF',
         },
     },
     {
@@ -55,6 +59,8 @@ export const themes = [
             info: '#91C6F3',
             warning: '#FB8C00',
             error: '#FF5252',
+            text: 'white',
+            background: '#000000',
         },
         light: {
             primary: '#1976D2',
@@ -64,6 +70,8 @@ export const themes = [
             info: '#2196F3',
             warning: '#FB8C00',
             error: '#FF5252',
+            text: 'black',
+            background: '#FFFFFF',
         },
     },
     {
@@ -76,6 +84,8 @@ export const themes = [
             info: '#91C6F3',
             warning: '#FB8C00',
             error: '#FF5252',
+            text: 'white',
+            background: '#000000',
         },
         light: {
             primary: '#1976D2',
@@ -85,6 +95,8 @@ export const themes = [
             info: '#2196F3',
             warning: '#FB8C00',
             error: '#FF5252',
+            text: 'black',
+            background: '#FFFFFF',
         },
     },
     {
@@ -97,6 +109,8 @@ export const themes = [
             info: '#2196F3',
             warning: '#FB8C00',
             error: '#FF5252',
+            text: 'white',
+            background: '#000000',
         },
         light: {
             primary: '#F2A7CF',
@@ -106,6 +120,8 @@ export const themes = [
             info: '#2196F3',
             warning: '#AB8C00',
             error: '#AF5252',
+            text: 'black',
+            background: '#FFFFFF',
         },
     },
 ];

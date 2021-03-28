@@ -15,7 +15,7 @@
       <div>themeName: <b>{{ themeName }}</b></div>
 
       <div>Theme Name</div>
-      <div>{{ theme.name }}</div>
+      <div v-if="theme">{{ theme.name }}</div>
 
       <ul>
         <li v-for="n in themeNames" :key="n">
@@ -63,11 +63,7 @@ export default {
 
     };
   },
-  computed: {},
-  watch: {
-    themeName: function(nv, ov) {
-      console.log("themeName", nv, ov);
-    },
+  computed: {
     /*
     theme(nv, ov) {
       console.log('theme', nv, ov);

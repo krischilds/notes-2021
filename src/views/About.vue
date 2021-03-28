@@ -2,8 +2,8 @@
   <div>
     <h5>Tree Menu</h5>
 
-    <div id="app">
-      <div class="tree-menu-container">
+    <div>
+      <div class="tree-menu-container ">
         <select v-model="selected" @change="selectTree">
           <option
             :key="option.value"

@@ -5,27 +5,23 @@
       <div>
         <h3>COLORS:  BG: {{ theme.backgroundColor }} : TEXT: {{ theme.color }}</h3>
         <v-text-field
-          dark
-          :background-color="theme.backgroundColor"
-          :color="theme.color"
           label="Main input"
           :rules="rules"
           hide-details="auto"
+          class="primary"
         ></v-text-field>
         <hr />
         <v-text-field
-          :background-color="theme.backgroundColor"
-          :color="theme.color"
           label="Another input"
         ></v-text-field>
         <v-btn
           dark
-          :style="{ color: theme.color, background: theme.backgroundColor }"
+          class="success"
         >
           Red Dark
         </v-btn>
         <v-btn light        
-        :style="{ color: theme.color, background: theme.backgroundColor }"
+        class="success"
         > Blue Light </v-btn>
       </div>
     </v-form>
@@ -91,6 +87,7 @@ export default {
         this.form.valid = false;
       }
     },
+    /*
     changeTheme(key) {
             console.log("themesMixin:changeTheme:" + key);
             console.log(themes);
@@ -102,6 +99,7 @@ export default {
             //this.color=theme.color; // TODO: this is overwriting a prop.  change it
             // this.$vuetify.theme.themes[this.isDark ? 'dark' : 'light'].primary = val
     },
+    */
     onSubmit(evt) {
       this.form.hasSubmitted = true;
       evt.preventDefault();

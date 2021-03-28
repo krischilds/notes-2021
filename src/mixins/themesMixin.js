@@ -4,10 +4,30 @@ export default {
     data() {
         return {
             themes: null,
-            theme: null,   
-            themeName: 'default',         
+            theme: null, 
+            color: null,    
         }
     },
+    watch: {
+        /*
+        theme['background']: function (val) {
+          root.style.setProperty(`--bc-background`,val);
+        },
+        theme['primary']: function (val) {
+            root.style.setProperty(`--bc-background`,val);
+          },
+        */
+ 
+        themeColors: function (val) {
+            console.log(val);
+            let root = document.documentElement;
+
+            for (let c in val) {
+                root.style.setProperty(`--bc-${c}`,val[c]);
+            }
+            
+        }
+      },
     methods:
      {
         getThemeByName(name) {
@@ -28,21 +48,26 @@ export default {
             const t = this.getThemeByName(name);
             if (!t) return null;
 
-            this.theme = t;
-            this.themeName = name;           
+            this.theme = t;   
             
             // update Vuex
             this.$store.commit("setTheme", this.theme);
+            //console.log(this.theme);
+            //console.log(this.themeColors);
+            //this.$store.commit("setThemeName", name);
 
-            // update Vuetify         
-            this.updateVuetifyTheme();
+            
+            if (this.$vuetify) {
+                // update Vuetify
+                this.updateVuetifyTheme();
+            } 
         },
 
         updateVuetifyTheme() {        
             const colors = this.themeColors;
             if (this.$vuetify && colors) {
-                for (let c in colors) {                    
-                    if (this.isDark) {                
+                for (let c in colors) {                                 
+                    if (this.isDark) {
                         this.$vuetify.theme.themes.dark[c] = colors[c];
                     } else {
                         this.$vuetify.theme.themes.light[c] = colors[c];
@@ -52,18 +77,19 @@ export default {
         } 
     },
     computed: {
-     
         isDark() {
             return this.$vuetify.theme.dark;
         },
 
         themeNames() {
+            if (!this.themes) return null;
             return this.themes.map((theme) => {
                 return theme.name;
             });
         },
     
         getStyle() {
+            if (!this.theme) return null;
             const theme = this.themeColors;
             if (!theme) return null;
             return {
@@ -73,27 +99,44 @@ export default {
         },
     
         primaryColor() {
+            if (!this.theme) return null;
             return this.theme.primary;          
         },
             
         secondaryColor() {
+            if (!this.theme) return null;
             return this.theme.secondary;          
         },
     
         textColor() {
+            if (!this.theme) return null;
            return this.theme.text;   
         },
     
         themeColors() {
+            if (!this.theme) return null;
             const colors = this.isDark ? this.theme.dark : this.theme.light;
             return colors;
         },
-        
+
+        themeName() {
+            return this.$store.getters.getThemeName || 'default'; 
+        }
     },
     
     created() {
         this.themes = [...themes];
-        this.themeName = this.$store.getters.getThemeName || 'default';        
-        this.theme = this.getThemeByName(this.themeName);
+        this.theme = this.themes[0];
+    },
+    /*
+    watch: {
+        '$store.getters.setTheme': function (nv, ov) {
+            console.log('theme changed - setTheme', nv, ov)
+        },
+        '$store.getters.getTheme': function(nv, ov) {
+            console.log("theme changed - getTheme", nv, ov);
+
+        },
     }
+    */
 }

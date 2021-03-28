@@ -17,10 +17,7 @@ export default new Vuex.Store({
   mutations: {    
     setTheme(state, value) {
       state.theme = value;
-    },
-    setThemeName(state, value) {
-      state.themeName = value;
-    },
+    },    
     setThemeIsDark(state, value) {
       state.themeIsDark = value;
     },
@@ -52,7 +49,11 @@ export default new Vuex.Store({
       return state.themeIsDark;
     },
     getThemeName(state) {
-      return state.themeName;
+      let name = '';
+      if (state.theme) {
+        name = state.theme.name;
+      }
+      return name;
     }
   },
   actions: {
