@@ -8,26 +8,26 @@ export default {
             color: null,    
         }
     },
-    watch: {
-        /*
-        theme['background']: function (val) {
-          root.style.setProperty(`--bc-background`,val);
-        },
-        theme['primary']: function (val) {
-            root.style.setProperty(`--bc-background`,val);
-          },
-        */
+    // watch: {
+    //     /*
+    //     theme['background']: function (val) {
+    //       root.style.setProperty(`--bc-background`,val);
+    //     },
+    //     theme['primary']: function (val) {
+    //         root.style.setProperty(`--bc-background`,val);
+    //       },
+    //     */
  
-        themeColors: function (val) {
-            console.log(val);
-            let root = document.documentElement;
+    //     themeColors: function (val, oldVal) {
+    //         console.log(val);
+    //         let root = document.documentElement;
 
-            for (let c in val) {
-                root.style.setProperty(`--bc-${c}`,val[c]);
-            }
+    //         for (let c in val) {
+    //             root.style.setProperty(`--bc-${c}`,val[c]);
+    //         }
             
-        }
-      },
+    //     }
+    //   },
     methods:
      {
         getThemeByName(name) {
@@ -59,7 +59,7 @@ export default {
             
             if (this.$vuetify) {
                 // update Vuetify
-                this.updateVuetifyTheme();
+                // this.updateVuetifyTheme();
             } 
         },
 
@@ -98,21 +98,7 @@ export default {
             }
         },
     
-        primaryColor() {
-            if (!this.theme) return null;
-            return this.theme.primary;          
-        },
-            
-        secondaryColor() {
-            if (!this.theme) return null;
-            return this.theme.secondary;          
-        },
-    
-        textColor() {
-            if (!this.theme) return null;
-           return this.theme.text;   
-        },
-    
+
         themeColors() {
             if (!this.theme) return null;
             const colors = this.isDark ? this.theme.dark : this.theme.light;
@@ -125,8 +111,11 @@ export default {
     },
     
     created() {
-        this.themes = [...themes];
-        this.theme = this.themes[0];
+        if (!this.themes)
+            this.themes = [...themes];
+        
+        // if (!this.theme)
+        //     this.theme = this.themes[0];
     },
     /*
     watch: {
